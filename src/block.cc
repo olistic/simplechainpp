@@ -3,6 +3,8 @@
 #include <ctime>
 #include <string>
 
+#include "sha256.h"
+
 namespace simplechain {
 
 Block::Block(Block* previous_block, std::string data, int difficulty,
@@ -31,7 +33,8 @@ int Block::nonce() const { return nonce_; }
 std::string Block::header() const {
   const std::string previous_block_hash =
       previous_block_ ? previous_block_->hash() : "";
-  return previous_block_hash + data_ + std::to_string(difficulty_) +
+  const std::string data_hash = sha256(data_);
+  return previous_block_hash + data_hash + std::to_string(difficulty_) +
          std::to_string(timestamp_) + std::to_string(nonce_);
 }
 
@@ -41,10 +44,7 @@ void Block::inc_nonce() { nonce_++; }
 
 void Block::set_hash(std::string hash) { hash_ = hash; }
 
-std::string Block::CalculateHash() const {
-  // TODO: Calculate the actual hash of the header.
-  return "shhhhhhh";
-}
+std::string Block::CalculateHash() const { return sha256(header()); }
 
 bool Block::IsValid() const {
   if (hash_ != CalculateHash()) {
