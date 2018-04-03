@@ -37,6 +37,10 @@ std::string Block::header() const {
 
 std::string Block::hash() const { return hash_; }
 
+void Block::inc_nonce() { nonce_++; }
+
+void Block::set_hash(std::string hash) { hash_ = hash; }
+
 std::string Block::CalculateHash() const {
   // TODO: Calculate the actual hash of the header.
   return "shhhhhhh";

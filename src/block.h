@@ -34,6 +34,10 @@ class Block {
 
   std::string hash() const;
 
+  void inc_nonce();
+
+  void set_hash(std::string hash);
+
   // Calculates the hash of the block.
   //
   // The hash of a block is the SHA-256 digest of its header.
